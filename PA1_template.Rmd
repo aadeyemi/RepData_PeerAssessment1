@@ -9,7 +9,7 @@ output:
 ## Loading and preprocessing the data
 
 Data loaded using read.csv after which it is filtered by removing NA rows. hist is used to plot a histogram
-```{r}
+```{r load, echo = TRUE}
 data <- read.csv("activity.csv",colClasses = "character")
 stepsVector  <- data$steps
 filteredData <- data[!is.na(stepsVector),]
@@ -24,7 +24,7 @@ hist(filteredData$steps,xlab = "Steps", ylab = "Frequency", main = "Data Histogr
 
 ## What is mean total number of steps taken per day?
 Mean steps calculated using mean function and median calculated using median function
-```{r}
+```{r daily1, echo = TRUE}
 meanSteps <- mean(filteredData$steps)
 medianSteps <- median(filteredData$steps)
 print(meanSteps)
@@ -35,7 +35,7 @@ print(medianSteps)
 
 ## What is the average daily activity pattern?
 for this question, we will need to write a helper function to compute daily steps. The code is as follows
-```{r}
+```{r daily2, echo = TRUE}
 calcTotalForDay <- function (reqDay,data) {
     dateVector <- data[, 2]
     dayData <- data[dateVector == reqDay,]
@@ -48,7 +48,7 @@ calcTotalForDay <- function (reqDay,data) {
 ```
 
 Once the helper function is done, we can compute daily steps with the following code
-```{r}
+```{r daily3, echo = TRUE}
 days <- unique(sort(filteredData[,2]))
 dailyData <- sapply(days,calcTotalForDay,data = filteredData)
 
@@ -61,7 +61,7 @@ dailyData[, 1] <- as.numeric(as.character(dailyData[, 1]))
 ```
 
 And then compute daily mean and median using
-```{r}
+```{r daily4, echo = TRUE}
 hist(dailyData$steps,xlab = "Daily Steps", ylab = "Frequency", main = "Daily Histogram")
 totalDailySteps  <- dailyData$steps
 meanDailySteps   <- mean(totalDailySteps)
@@ -78,7 +78,7 @@ A histogram is shown below
 
 To compute the most active 5 minute interval, we need another helper function
 
-```{r}
+```{r daily5, echo = TRUE}
 
 
 fiveMinsIntervalForDay <- function (reqDay,data) {
@@ -94,7 +94,8 @@ fiveMinsIntervalForDay <- function (reqDay,data) {
 
 
 With this helper function, we can proceed. First we compute a table with all 5 minute interval accross all days and then name the columns
-```{r}
+
+```{r daily6, echo = TRUE}
 dailyPer5MinsData <- sapply(days,fiveMinsIntervalForDay,data = filteredData)
 dailyPer5MinsData <- data.frame(t(dailyPer5MinsData))
 cnames <- (c(1:length(dailyPer5MinsData))-1)*5
