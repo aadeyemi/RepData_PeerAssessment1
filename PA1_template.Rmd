@@ -235,6 +235,12 @@ cnames <- (c(1:length(dailyPer5MinsDataWeekEnd))-1)*5
 cnames <- as.character(cnames)
 colnames(dailyPer5MinsDataWeekEnd) <- cnames
 dailyPer5MinsDataWeekEndSum <- colSums (dailyPer5MinsDataWeekEnd)/nrow(dailyPer5MinsDataWeekEnd)
+
+#plot
+plot(dailyPer5MinsDataWeekDaySum, type="l", col="blue",xlab = "5 Minute Interval For Weekdays", ylab = "Number of steps", main = "Daily Steps per 5 Minute")
+
+plot(dailyPer5MinsDataWeekEndSum, type="l", col="blue",xlab = "5 Minute Interval For Weekends", ylab = "Number of steps", main = "Daily Steps per 5 Minute")
+
 ```
 
 My resulting time series plots are shown below
