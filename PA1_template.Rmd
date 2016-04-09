@@ -8,18 +8,120 @@ output:
 
 ## Loading and preprocessing the data
 
+Data loaded using read.csv after which it is filtered by removing NA rows. hist is used to plot a histogram
+```{r}
+data <- read.csv("activity.csv",colClasses = "character")
+stepsVector  <- data$steps
+filteredData <- data[!is.na(stepsVector),]
+
+filteredData[, 1] <- as.numeric(filteredData[, 1])
+filteredData[, 2] <- as.Date(filteredData[, 2],"%Y-%m-%d")
+
+hist(filteredData$steps,xlab = "Steps", ylab = "Frequency", main = "Data Histogram")
+```
+
 
 
 ## What is mean total number of steps taken per day?
+Mean steps calculated using mean function and median calculated using median function
+```{r}
+meanSteps <- mean(filteredData$steps)
+medianSteps <- median(filteredData$steps)
+print(meanSteps)
+print(medianSteps)
+```
 
 
 
 ## What is the average daily activity pattern?
+for this question, we will need to write a helper function to compute daily steps. The code is as follows
+```{r}
+calcTotalForDay <- function (reqDay,data) {
+    dateVector <- data[, 2]
+    dayData <- data[dateVector == reqDay,]
+    
+    d <- c(sum(dayData$steps),reqDay)
+    
+    d
+    
+}
+```
+
+Once the helper function is done, we can compute daily steps with the following code
+```{r}
+days <- unique(sort(filteredData[,2]))
+dailyData <- sapply(days,calcTotalForDay,data = filteredData)
+
+dailyData <- data.frame(t(dailyData))
+
+cnames <- c("steps", "day")
+colnames(dailyData) <- cnames
+
+dailyData[, 1] <- as.numeric(as.character(dailyData[, 1]))
+```
+
+And then compute daily mean and median using
+```{r}
+hist(dailyData$steps,xlab = "Daily Steps", ylab = "Frequency", main = "Daily Histogram")
+totalDailySteps  <- dailyData$steps
+meanDailySteps   <- mean(totalDailySteps)
+medianDailySteps <- median(totalDailySteps)
+```
+
+The mean daily steps is 10766
+The median daily steps is 10765
+
+A histogram is shown below
+
+![Histogram of daily steps] (./figures/daily_steps_histogram.png.png)
 
 
+To compute the most active 5 minute interval, we need another helper function
+
+```{r}
+
+
+fiveMinsIntervalForDay <- function (reqDay,data) {
+    dateVector <- data[, 2]
+    dayData <- data[dateVector == reqDay,]
+    
+    d <- dayData$steps
+    
+    d
+    
+}
+```
+
+
+With this helper function, we can proceed. First we compute a table with all 5 minute interval accross all days and then name the columns
+```{r}
+dailyPer5MinsData <- sapply(days,fiveMinsIntervalForDay,data = filteredData)
+dailyPer5MinsData <- data.frame(t(dailyPer5MinsData))
+cnames <- (c(1:length(dailyPer5MinsData))-1)*5
+cnames <- c(1:length(dailyPer5MinsData))-1
+cnames <- as.character(cnames)
+colnames(dailyPer5MinsData) <- cnames
+
+per5MinuteSum <- colSums (dailyPer5MinsData)
+print(dim(dailyPer5MinsData))
+print(length(per5MinSum))
+
+#plot
+plot(per5MinuteSum, type="l", col="blue",xlab = "5 Minute Interval", ylab = "Frequency", main = "Daily Steps per 5 Minute")
+
+# which 5 min interval is max
+print(max(per5MinuteSum))
+mostActive5Minute <- per5MinuteSum[per5MinuteSum == max(per5MinuteSum)]
+print(mostActive5Minute)
+```
+The most active 5 minute interval is the 103rd  5 minute reading and its value is 10927
+
+
+![ Time series plot of the 5-minute interval and the average number of steps taken] (./figures/per_5minute_sum.png)
 
 ## Imputing missing values
 
 
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
