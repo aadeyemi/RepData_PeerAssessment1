@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 
 ## Loading and preprocessing the data
@@ -16,7 +21,7 @@ filteredData[, 2] <- as.Date(filteredData[, 2],"%Y-%m-%d")
 hist(filteredData$steps,xlab = "Steps", ylab = "Frequency", main = "Data Histogram")
 ```
 
-![](PA1_template_files/figure-html/load-1.png)
+![plot of chunk load](figure/load-1.png)
 
 
 
@@ -26,6 +31,19 @@ Mean steps calculated using mean function and median calculated using median fun
 ```r
 meanSteps <- mean(filteredData$steps)
 medianSteps <- median(filteredData$steps)
+print(meanSteps)
+```
+
+```
+## [1] 37.3826
+```
+
+```r
+print(medianSteps)
+```
+
+```
+## [1] 0
 ```
 
 
@@ -65,7 +83,7 @@ And then compute daily mean and median using
 hist(dailyData$steps,xlab = "Daily Steps", ylab = "Frequency", main = "Daily Histogram")
 ```
 
-![](PA1_template_files/figure-html/daily4-1.png)
+![plot of chunk daily4](figure/daily4-1.png)
 
 ```r
 totalDailySteps  <- dailyData$steps
@@ -109,16 +127,45 @@ cnames <- as.character(cnames)
 colnames(dailyPer5MinsData) <- cnames
 
 per5MinuteSum <- colSums (dailyPer5MinsData)
+print(dim(dailyPer5MinsData))
+```
 
+```
+## [1]  53 288
+```
+
+```r
+print(length(per5MinSum))
+```
+
+```
+## Error in print(length(per5MinSum)): object 'per5MinSum' not found
+```
+
+```r
 #plot
 plot(per5MinuteSum, type="l", col="blue",xlab = "5 Minute Interval", ylab = "Frequency", main = "Daily Steps per 5 Minute")
 ```
 
-![](PA1_template_files/figure-html/daily6-1.png)
+![plot of chunk daily6](figure/daily6-1.png)
 
 ```r
 # which 5 min interval is max
+print(max(per5MinuteSum))
+```
+
+```
+## [1] 10927
+```
+
+```r
 mostActive5Minute <- per5MinuteSum[per5MinuteSum == max(per5MinuteSum)]
+print(mostActive5Minute)
+```
+
+```
+##   103 
+## 10927
 ```
 The most active 5 minute interval is  510 (the 103rd 5 minute) reading and its value is 10927
 
@@ -164,7 +211,7 @@ To plot the new histograms, I use
 hist(dataWithFixedNaDailyData$steps,xlab = "Daily Steps", ylab = "Frequency", main = "Daily Histogram")
 ```
 
-![](PA1_template_files/figure-html/missing data4-1.png)
+![plot of chunk missing data4](figure/missing data4-1.png)
 
 A histogram of the new plots is shown below
 ![Histogram of daily steps after fixing NA values] (./figure/fixed_na_daily_steps_histogram.png)
@@ -255,13 +302,13 @@ dailyPer5MinsDataWeekEndSum <- colSums (dailyPer5MinsDataWeekEnd)/nrow(dailyPer5
 plot(dailyPer5MinsDataWeekDaySum, type="l", col="blue",xlab = "5 Minute Interval For Weekdays", ylab = "Number of steps", main = "Daily Steps per 5 Minute")
 ```
 
-![](PA1_template_files/figure-html/daytype4-1.png)
+![plot of chunk daytype4](figure/daytype4-1.png)
 
 ```r
 plot(dailyPer5MinsDataWeekEndSum, type="l", col="blue",xlab = "5 Minute Interval For Weekends", ylab = "Number of steps", main = "Daily Steps per 5 Minute")
 ```
 
-![](PA1_template_files/figure-html/daytype4-2.png)
+![plot of chunk daytype4](figure/daytype4-2.png)
 
 My resulting time series plots are shown below
 

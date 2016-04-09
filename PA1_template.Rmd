@@ -27,8 +27,6 @@ Mean steps calculated using mean function and median calculated using median fun
 ```{r daily1, echo = TRUE}
 meanSteps <- mean(filteredData$steps)
 medianSteps <- median(filteredData$steps)
-print(meanSteps)
-print(medianSteps)
 ```
 
 
@@ -104,16 +102,12 @@ cnames <- as.character(cnames)
 colnames(dailyPer5MinsData) <- cnames
 
 per5MinuteSum <- colSums (dailyPer5MinsData)
-print(dim(dailyPer5MinsData))
-print(length(per5MinSum))
 
 #plot
 plot(per5MinuteSum, type="l", col="blue",xlab = "5 Minute Interval", ylab = "Frequency", main = "Daily Steps per 5 Minute")
 
 # which 5 min interval is max
-print(max(per5MinuteSum))
 mostActive5Minute <- per5MinuteSum[per5MinuteSum == max(per5MinuteSum)]
-print(mostActive5Minute)
 ```
 The most active 5 minute interval is  510 (the 103rd 5 minute) reading and its value is 10927
 
