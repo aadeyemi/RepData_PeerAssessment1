@@ -118,7 +118,7 @@ print(mostActive5Minute)
 The most active 5 minute interval is the 103rd  5 minute reading and its value is 10927
 
 
-![ Time series plot of the 5-minute interval and the average number of steps taken] (./figures/per_5minute_sum.png)
+![ Time series plot of the 5-minute interval and the average number of steps taken] (./figures/per_5minute_sum2.png)
 
 ## Imputing missing values
 
