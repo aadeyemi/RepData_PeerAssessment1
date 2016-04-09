@@ -73,7 +73,7 @@ The median daily steps is 10765
 
 A histogram is shown below
 
-![Histogram of daily steps] (./figures/daily_steps_histogram.png.png)
+![Histogram of daily steps] (./figure/daily_steps_histogram.png.png)
 
 
 To compute the most active 5 minute interval, we need another helper function
@@ -118,7 +118,7 @@ print(mostActive5Minute)
 The most active 5 minute interval is the 103rd  5 minute reading and its value is 10927
 
 
-![ Time series plot of the 5-minute interval and the average number of steps taken] (./figures/per_5minute_sum2.png)
+![ Time series plot of the 5-minute interval and the average number of steps taken] (./figure/per_5minute_sum2.png)
 
 ## Imputing missing values
 
